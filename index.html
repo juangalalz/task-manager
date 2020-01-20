@@ -1,0 +1,419 @@
+<html><head><style type="text/css">
+ /* Add your css styles here. Plagiarism is NOT tolerated!*/
+.list {
+  background: #EBECF0;
+  border-radius: 3px;
+  max-height: 100%;
+  width: 280px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.list_title {
+  font-size: 16px;
+  line-height: 20px;
+  color: #172b4d;
+  font-weight: 600;
+  padding: 4px 8px;
+  margin-bottom: 10px;
+}
+
+.button {
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 20px;
+  background-color: #00b047;
+  padding: 10px 10px;
+  text-align: center;
+  white-space: nowrap;
+  border-radius: .25rem;
+  border: none;
+  outline: none;
+}
+
+.button.danger {
+  background: #ff0000;
+}
+
+.button.default {
+  background: #3780FF;
+}
+
+.button.edit {
+  margin-right: 5px;
+}
+
+.button:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.list_footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  overflow: hidden;
+  position: relative;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(9,30,66,.25);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  min-height: 20px;
+  padding: 6px;
+}
+
+.card_priority {
+  display: block;
+  margin-top: 5px;
+}
+
+.card_text {
+  color: #172b4d;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.priority {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  border-radius: 3px;
+  background: #00b047;
+  color: #fff;
+  padding: 1px 5px;
+  float: right;
+  display: block;
+  text-transform: capitalize;
+}
+
+.priority.medium {
+  background: #1a75ff;
+}
+
+.priority.high {
+  background: #ff0000;
+}
+
+.card_actions {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(102, 102, 102, 0.7);
+}
+
+.card:hover .card_actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(102, 102, 102, 0.5);
+  display: none;
+}
+
+.show-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal_card {
+  min-width: 200px;
+  border-radius: 5px;
+  background: #ffffff;
+  padding: 20px 30px;
+  min-width: 45%;
+}
+
+.modal_card_title {
+  font-size: 16px;
+  line-height: 20px;
+  color: #172b4d;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+input, textarea, select {
+  border-radius: .25em;
+  width: 100%;
+  padding: .25em .4em;
+  font-size: 1rem;
+  line-height: 1.4;
+  border: 1px solid #d6e6f2;
+  font-weight: 300;
+  outline: none;
+  min-height: 32px;
+}
+
+select {
+  height: 32px;
+  background: #FFFFFF;
+}
+
+label {
+  display: flex;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #172b4d;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+form {
+  margin: 0;
+}
+
+.form_button-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-body {
+  margin-bottom: 10px;
+  max-height: calc(100vh - 135px);
+  overflow-y: auto;
+}
+
+.lists {
+  display: flex;
+  justify-content: center;
+}
+
+</style>
+ <!-- Enter your HTML code here. Plagiarism is NOT tolerated! -->
+</head>
+<body cz-shortcut-listen="true">
+  <div class="lists">
+    <div class="list">
+      <div class="list_title">
+        Task Management
+      </div>
+      <div class="list-body" id="list-body">
+      </div>
+      <div class="list_footer">
+        <button
+          id="add-task"
+          type="button"
+          name="add-button"
+          onclick="openModal('New')"
+          class="button">
+          Add task
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="modal" class="modal">
+    <div class="modal_card">
+      <div id="modal_card_title" class="modal_card_title">New</div>
+      <div class="modal_card_body">
+        <form class="modal_form" onsubmit="myFunction(event)">
+          <label for="task-name">Name:
+            <input
+              type="text"
+              id="task-name"
+              name="task-name"
+              value=""
+              required
+              />
+          </label>
+          <label for="task-description">Description:
+            <textarea
+              name="task-description"
+              id="task-description"
+              rows="2"
+              cols="20"
+              required ></textarea>
+          </label>
+          <label for="task-priority">Priority:
+            <select
+              id="task-priority"
+              class="form-select"
+              name="task-priority"
+              required
+              >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+          <label for="task-expiration">Expiration:
+            <input
+              id="task-expiration"
+              type="date"
+              name="task-expiration"
+              value=""
+              required
+            />
+          </label>
+          <input
+            id="task-id"
+            type="hidden"
+            name="task-id"
+            value="new"
+          />
+          <div class="form_button-container">
+            <button
+              type="button"
+              name="send-form"
+              class="button default edit"
+              onclick="closeModal()"
+            >
+            Cancel</button>
+            <button type="submit" name="send-form" class="button">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+ <script type="text/javascript">
+   var tasks = []
+   tasks.push({name: "Meeting 1", description: "Meeting 1", priority: "low", expiration: "2020-01-22"})
+   tasks.push({name: "Meeting 2", description: "Meeting 2", priority: "medium", expiration: "2020-01-22"})
+   tasks.push({name: "Meeting 3", description: "Meeting", priority: "high", expiration: "2020-01-22"})
+   tasks.push({name: "Meeting 4", description: "Meeting", priority: "low", expiration: "2020-01-22"})
+   tasks.push({name: "Meeting 5", description: "Meeting", priority: "medium", expiration: "2020-01-22"})
+   renderTasks();
+   function myFunction(e) {
+     e.preventDefault();
+     let taskId = document.getElementById("task-id").value
+     let newTask = {
+       name: document.getElementById("task-name").value,
+       description: document.getElementById("task-description").value,
+       priority: document.getElementById("task-priority").value,
+       expiration: document.getElementById("task-expiration").value,
+     }
+     if(taskId != 'new') {
+       tasks[taskId] = newTask;
+     } else {
+       tasks.push(newTask);
+     }
+     closeModal();
+     renderTasks();
+  }
+
+  function clearForm() {
+    document.getElementById("task-name").value = "";
+    document.getElementById("task-description").value = "";
+    document.getElementById("task-priority").value = "";
+    document.getElementById("task-expiration").value = "";
+    document.getElementById("task-id").value = "new";
+  }
+
+  function openModal(title) {
+    let modalTitle = document.getElementById("modal_card_title");
+    modalTitle.innerHTML = title;
+    let modal = document.getElementById("modal");
+    modal.classList.add("show-modal");
+  }
+
+  function closeModal(title) {
+    clearForm();
+    let element = document.getElementById("modal");
+    element.classList.remove("show-modal");
+  }
+
+  function editTask(e) {
+    let taskId = e.target.getAttribute("task-id");
+    document.getElementById("task-name").value = tasks[taskId].name;
+    document.getElementById("task-description").value = tasks[taskId].description;
+    document.getElementById("task-priority").value = tasks[taskId].priority;
+    document.getElementById("task-expiration").value = tasks[taskId].expiration;
+    document.getElementById("task-id").value = taskId;
+    openModal("Edit " + tasks[taskId].name);
+  }
+
+  function removeTask(e) {
+    let taskId = e.target.getAttribute("task-id");
+    tasks.splice(taskId, 1);
+    renderTasks();
+  }
+
+  function getCard(index) {
+    let card = document.createElement("div");
+    card.classList.add('card');
+
+    let cardText = getCardText(index);
+    let cardPriority = getCardPriority(index);
+    let cardActions = getCardActions(index);
+
+    card.appendChild(cardText);
+    card.appendChild(cardPriority);
+    card.appendChild(cardActions);
+    return card;
+  }
+
+  function getCardText(index) {
+    let cardText = document.createElement("div");
+    cardText.classList.add('card_text');
+    let textnode = document.createTextNode(tasks[index].name);
+    cardText.appendChild(textnode);
+    return cardText;
+  }
+
+  function getCardPriority(index) {
+    let cardPriority = document.createElement("div");
+    cardPriority.classList.add('card_priority');
+    let priority = document.createElement("div");
+    priority.classList.add('priority');
+    priority.classList.add(tasks[index].priority);
+    let priorityText = document.createTextNode(tasks[index].priority);
+    priority.appendChild(priorityText);
+    cardPriority.appendChild(priority);
+    return cardPriority;
+  }
+
+  function getCardActions(index) {
+    let cardActions = document.createElement("div");
+    cardActions.classList.add('card_actions');
+    let editButton = document.createElement("button");
+    editButton.onclick = editTask
+    editButton.setAttribute("task-id", index);
+    editButton.classList.add('button');
+    editButton.classList.add('default');
+    editButton.classList.add('edit');
+    let editButtonText = document.createTextNode('Edit');
+    editButton.appendChild(editButtonText);
+    let deleteButton = document.createElement("button");
+    deleteButton.onclick = removeTask
+    deleteButton.setAttribute("task-id", index);
+    deleteButton.classList.add('button');
+    deleteButton.classList.add('danger');
+    let deleteButtonText = document.createTextNode('Delete');
+    deleteButton.appendChild(deleteButtonText);
+    cardActions.appendChild(editButton);
+    cardActions.appendChild(deleteButton);
+    return cardActions;
+  }
+
+  function renderTasks() {
+    const listBody = document.getElementById('list-body');
+    listBody.innerHTML = '';
+    for (const index in tasks) {
+      let card = getCard(index);
+      listBody.appendChild(card);
+    }
+  }
+ </script>
+</body>
+</html>
